@@ -1,22 +1,46 @@
-const Engine=Matter.Engine;
-const World=Matter.World;
-const Matter=Matter.Bodies;
 
-var engine, world;
-var object;
+var car,wall;
+var speed,weight;
+
+
 
 function setup() {
-  createCanvas(400,400);
-  engine=Engine.create();
-  world =engine.world;
+  createCanvas(800,400);
 
-  object=Bodies.rectangle(200,100,50,50);
-  World.add(world.object);
- console.log(object);
+  speed=random(55,90);
+  weight=random(400,1500);
+
+ car= createSprite(50, 200, 50, 50);
+ car.velocityX=speed;
+
+ wall=createSprite(600,200,20,height/2);
+ 
 }
 
 function draw() {
-  background("black");  
-  rectMode(CENTER);
-   rect(200,200,50,50);
+  background(255,255,255);  
+
+  if(wall.x-car.x<(car.width+wall.width)/2)
+  {
+    car.velocityX=0;
+    var deformation=0.5* weight * speed*speed/22509;
+    if(deformation>180){
+      car.shapeColor=color(255,0,0);
+    }
+    if(deformation<180 && deformation>100){
+      car.shapeColor=color(230,230,0);
+    }
+    if(deformation<100){
+      car.shapeColor=color(0,255,0);
+    }
+
+  }
+
+
+
+
+
+
+
+  drawSprites();
 }
